@@ -1,0 +1,95 @@
+#include<LiquidCrystal.h>
+LiquidCrystal lcd(12,13,8,9,10,11);
+int flexpin1=A0;
+int flexpin2=A1;
+int flexpin3=A2;
+int flexpin4=A3;
+int value1;
+int value2;
+int value3;
+int value4;
+
+void setup()
+{
+  lcd.begin(16,2);
+  lcd.setCursor(0,0);
+  lcd.print("SIGN LANGUAGE");
+  Serial.begin(9600);
+ 
+}
+void loop()
+{
+  value1=analogRead(flexpin1);
+  value2=analogRead(flexpin2);
+  value3=analogRead(flexpin3);
+  value4=analogRead(flexpin4);
+  Serial.print(value1);
+
+  value1=map(value1,890,950,0,100);
+  value2=map(value2,890,950,0,100);
+  value3=map(value3,890,950,0,100);
+  value4=map(value4,890,950,0,100);
+
+  pinMode(7,OUTPUT);
+
+  if(value1>90 && value2<70 && value3<70 && value4<70)
+  {
+    pinMode(3,OUTPUT);
+    Serial.print("FOOD");
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("SIGN LANGUAGE");
+    lcd.setCursor(0,1);
+    lcd.print("FOOD");
+    digitalWrite(3,LOW);
+    digitalWrite(7,HIGH);
+    delay(1000);
+    digitalWrite(3,HIGH);
+    digitalWrite(7,LOW);
+  }
+  if(value1<70 && value2>90 && value3<70 && value4<70)
+  {
+    pinMode(4,OUTPUT);
+    Serial.print("WATER");
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("SIGN LANGUAGE");
+    lcd.setCursor(0,1);
+    lcd.print("WATER");
+    digitalWrite(4,LOW);
+    digitalWrite(7,HIGH);
+    delay(1000);
+    digitalWrite(4,HIGH);
+    digitalWrite(7,LOW);
+  }
+  if(value1>70 && value2<70 && value3<90 && value4<70)
+  {
+    pinMode(5,OUTPUT);
+    Serial.print("MEDICINE");
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("SIGN LANGUAGE");
+    lcd.setCursor(0,1);
+    lcd.print("MEDICINE");
+    digitalWrite(5,LOW);
+    digitalWrite(7,HIGH);
+    delay(1000);
+    digitalWrite(5,HIGH);
+    digitalWrite(7,LOW);
+  }
+  if(value1<70 && value2<70 && value3<70 && value4>90)
+  {
+    pinMode(6,OUTPUT);
+    Serial.print("WHEELCHAIR");
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("SIGN LANGUAGE");
+    lcd.setCursor(0,1);
+    lcd.print("WHEELCHAIR");
+    digitalWrite(6,LOW);
+    digitalWrite(7,HIGH);
+    delay(1000);
+    digitalWrite(6,HIGH);
+    digitalWrite(7,LOW);
+  }
+  }
